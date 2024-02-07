@@ -6,7 +6,7 @@
 
 #define PORT 6543
 #define BUFFER_SIZE 1024
-
+ 
 int main() {
     int server_fd, new_socket;
     struct sockaddr_in server_address, client_address;
