@@ -133,6 +133,21 @@ The `ioctl` system call is then used with the `SIOCSIFADDR` command to set the I
 }
 ```
 
+
+
+
+
+
+
+
+
+tools that had been used: wireshirk tcpdump scapy
+
+sites that had been used: hex to binery hex packet analysis
+
+concepts learnt from youtube: checksum bitwise operator bitwise left operator
+
+
 Finally, the socket is closed, and the function returns `0` if the operation was successful. If there is an error, it prints an error message using `perror` and returns `-1`.
 
 
