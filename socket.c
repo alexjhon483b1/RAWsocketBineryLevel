@@ -9,7 +9,7 @@
 #define DEST_IP "103.221.255.104"  // Update with the IP address of your server
 #define PORT 443
 #define PACKET_SIZE 1024
-
+ 
 // Function to calculate the checksum of a packet
 unsigned short calculate_checksum(unsigned short *buffer, int size) {
     unsigned long cksum = 0;
