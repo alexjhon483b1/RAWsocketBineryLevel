@@ -139,13 +139,6 @@ Finally, the socket is closed, and the function returns `0` if the operation was
 
 
 
-
-
-
-
-
-
-
 tools that had been used: 
 
 wireshirk 
@@ -167,4 +160,29 @@ checksum
 bitwise operator
 
 bitwise left operator
+
+
+linux command used:
+
+sudo modprobe dummy         # Load the dummy kernel module
+
+sudo ip link add dummy0 type dummy  # Create a dummy interface named dummy0
+
+sudo ip link set up dummy0   # Bring the dummy interface up
+
+sudo ip link set down dummy0   # Bring the dummy interface down
+
+sudo ip link delete dummy0     # Delete the dummy interface
+
+iptable rules:
+
+sudo iptables -L
+
+sudo iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
+
+sudo iptables -A INPUT -p tcp --dport 25 -j DROP
+
+sudo iptables -D INPUT -p tcp --dport 25 -j DROP
+
+sudo iptables -D OUTPUT -p tcp --dport 80 -j ACCEPT
 
