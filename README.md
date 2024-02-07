@@ -69,3 +69,70 @@ In addition to TCP, UDP, raw IP packets, and ICMP, there are other protocols and
    ```
    For capturing raw packets from a network interface.
 
+
+
+
+
+
+
+
+The code provided is a C function for setting the IP address of a network interface on a Linux/Unix system. Let's break down the key components:
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <net/if.h>
+#include <netinet/in.h>
+```
+
+This section includes the necessary header files for socket programming, ioctl operations, network interfaces, and Internet protocols.
+
+```c
+int setIpAddress(const char *interface, const char *ipAddress) {
+    int sockfd;
+    struct ifreq ifr;
+    struct sockaddr_in addr;
+
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sockfd == -1) {
+        perror("socket");
+        return -1;
+    }
+```
+
+Here, the function `setIpAddress` takes two parameters: `interface` (network interface name, e.g., "eth0") and `ipAddress` (the IP address to be assigned).
+
+The function begins by creating a socket using the `socket` system call with the address family `AF_INET` (IPv4) and socket type `SOCK_DGRAM` (datagram socket).
+
+```c
+    strncpy(ifr.ifr_name, interface, IFNAMSIZ);
+
+    // Set the IP address
+    memset(&addr, 0, sizeof(addr));
+    addr.sin_family = AF_INET;
+    addr.sin_addr.s_addr = inet_addr(ipAddress);
+    memcpy(&ifr.ifr_addr, &addr, sizeof(struct sockaddr));
+```
+
+This part of the code populates the `ifr` structure with the network interface name (`ifr_name`) and sets the IP address. It uses the `inet_addr` function to convert the IP address string to the binary form expected by `sin_addr.s_addr`.
+
+```c
+    if (ioctl(sockfd, SIOCSIFADDR, &ifr) == -1) {
+        perror("ioctl SIOCSIFADDR");
+        close(sockfd);
+        return -1;
+    }
+```
+
+The `ioctl` system call is then used with the `SIOCSIFADDR` command to set the IP address of the specified network interface.
+
+```c
+    close(sockfd);
+    return 0;
+}
+```
+
+Finally, the socket is closed, and the function returns `0` if the operation was successful. If there is an error, it prints an error message using `perror` and returns `-1`.
+
+
